@@ -1,0 +1,64 @@
+<div class="container"
+  fxLayout="column"
+  fxLayoutGap="10px">
+  <div fxFlex>
+    <div fxLayout="column" fxLayout.gt-sm="row">
+      <div fxFlex="100" fxLayout="column" fxLayoutGap="20px">
+        <mat-card>
+          <mat-card-header style="justify-content: center; align-items: center;">
+            <mat-card-title>
+              <h2>Список услуг</h2>
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-actions>
+            <button mat-button [matMenuTriggerFor]="categories">
+                Фильтр услуг
+            </button>
+
+            <mat-menu #categories="matMenu" appearance="fill">
+                <button mat-menu-item [matMenuTriggerFor]="services">Осмотры</button>
+                <button mat-menu-item [matMenuTriggerFor]="analyzes">Анализы</button>
+            </mat-menu>
+  
+            <mat-menu #services="matMenu">
+                <ng-template matMenuContent let-data="service">
+                    <ng-template ngFor let-item [ngForOf]="filterByCategory('services')">
+                        <div (click) = "$event.stopPropagation()">
+                            <mat-checkbox>{{item.name}}</mat-checkbox>
+                        </div>
+                      </ng-template>
+                </ng-template>
+            </mat-menu>
+
+            <mat-menu #analyzes="matMenu">
+                <ng-template matMenuContent let-data="service">
+                    <ng-template ngFor let-item [ngForOf]="filterByCategory('analyzes')">
+                        <div (click) = "$event.stopPropagation()">
+                            <mat-checkbox>{{item.name}}</mat-checkbox>
+                        </div>
+                      </ng-template>
+                </ng-template>
+            </mat-menu>
+
+          </mat-card-actions>
+          <mat-card-content>
+            <div class="container" fxLayout="column" fxLayoutGap="10px">
+                <mat-list dense *ngFor="let service of allServices">
+                    <mat-divider></mat-divider>
+                    <mat-list-item style="height: auto !important;box-sizing: border-box;">
+                        <h3>{{service.name}}
+                          <a mat-icon-button #tooltip="matTooltip" matTooltip="{{service.description}}">
+                            <mat-icon >info</mat-icon>
+                          </a>
+                        </h3>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                </mat-list>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+
